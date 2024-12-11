@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { fetchBreeds } from '../utils/api';
 import { BreedImage } from '@/components/BreedImage';
+import {Navbar} from '@/components/Navbar';
 import '../app/globals.css';
 
 
@@ -36,51 +37,50 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Lista de Razas</h1>
-      <div className="pagination">
-        <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>
+      <Navbar/>
+      <h1>Welcome</h1>
+      <div id="pagination" className="w-fit mx-auto justify-items-center justify-center mt-10 mb-5">
+        <button className="mx-1 px-3 py-2 bg-gray-200 text-gray-500 font-medium rounded-md" disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>
           Anterior
         </button>
-        <span>Página {currentPage}</span>
-        <button
+        <span className="mx-1 px-3 py-2 bg-gray-200 text-gray-700 font-medium hover:bg-blue-500 hover:text-gray-200 rounded-md">{currentPage}</span>
+        <button className="mx-1 px-3 py-2 bg-gray-200 text-gray-500 font-medium rounded-md"
           disabled={currentPage * itemsPerPage >= breeds.length}
           onClick={() => setCurrentPage(currentPage + 1)}
         >
           Siguiente
         </button>
       </div>
-
+<div id="search" className="w-fit mx-auto justify-items-center justify-center mt-10 mb-5">
       <input
         type="text"
-        placeholder="Buscar raza..."
+        placeholder="Buscar raza por nombre"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="search-input"
+        className="appearance-none border-2 pl-10 border-gray-300 hover:border-gray-400 transition-colors rounded-md w-full py-2 px-3 text-gray-800 leading-tight focus:outline-none focus:ring-purple-600 focus:border-purple-600 focus:shadow-outline"
       />
+</div>
 
-      <div className="grid-container">
-        {paginatedBreeds.map((breed: { id: number; name: string; reference_image_id: string }) => (
-          <div key={breed.id} className="grid-item">
+<section id="cards"
+    className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+
+        {paginatedBreeds.map((breed: { id: number; name: string; temperament:string, reference_image_id: string }) => (
+          
+          <div key={breed.id} className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
             {breed.reference_image_id && (
               <BreedImage referenceImageId={breed.reference_image_id} />
             )}
-            <h2>{breed.name}</h2>
+            <h2 className="text-lg font-bold text-black">{breed.name}</h2>
+            <span className="text-gray-400">{breed.temperament}</span>
+
+
+            
           </div>
         ))}
-      </div>
 
-      <div className="pagination">
-        <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>
-          Anterior
-        </button>
-        <span>Página {currentPage}</span>
-        <button
-          disabled={currentPage * itemsPerPage >= breeds.length}
-          onClick={() => setCurrentPage(currentPage + 1)}
-        >
-          Siguiente
-        </button>
-      </div>
+</section>
+
+      
     </div>
   );
 }
