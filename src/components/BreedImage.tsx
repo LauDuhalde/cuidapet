@@ -14,7 +14,7 @@ export function BreedImage({ referenceImageId }: { referenceImageId: string }) {
   
     return image ? (
       <div>
-        <img src={image} alt="Raza" width={150} className="grid-image"/>
+        <img src={image} alt="Raza" width={150} className="h-80 w-72 object-cover rounded-t-xl"/>
       </div>
     ) : (
       <p>No image available</p>
